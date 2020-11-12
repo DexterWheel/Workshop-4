@@ -1,0 +1,75 @@
+---
+title: "main"
+author: "Dexter Weighell"
+output:
+  bookdown::pdf_document2: default
+  bookdown::word_document2: default
+  bookdown::html_document2: default
+bibliography: ref/ref-tex.bib
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.retina = 3)
+```
+
+```{r packages and functions}
+library(tidyverse)
+library(tidyr)
+source("scripts/sum-sqr.R")
+source("scripts/data-summary.R")
+```
+
+```{r }
+figs<- "figures/egg-figure.jpg"
+```
+
+
+## **Introduction**
+
+Egg egg egg, egg egg egg [@Hinde]. As seen in figure ![Egg](figures/egg-figures.jpg)
+
+## **Methods**
+
+## **Results**
+chaffinches have a greater mean mass
+
+``` {r import data analysis}
+
+chaff <- read.table("data-raw/chaff.txt", header = TRUE)
+
+chaff2 <- chaff %>% pivot_longer(names_to = "sex", values_to = "mass", 
+                                 cols = everything())
+shapiro.test(chaff2$mass)
+
+mod <- lm(data = chaff2, mass ~ sex)
+mod
+summary(mod)
+
+fig1 <- ggplot(data = chaff2, aes(x = sex, y = mass, fill = sex))+
+  geom_boxplot()+
+  theme_classic()
+
+units <- "in"  
+fig_w <- 3.5
+fig_h <- fig_w
+dpi <- 300
+device <- "tiff" 
+
+ggsave("figures/fig1.tiff",
+       plot = fig1,
+       device = device,
+       width = fig_w,
+       height = fig_h,
+       units = units,
+       dpi = dpi)
+fig1
+```
+
+```{r egg-figure, out.width="30%", fig.cap="egg"}
+knitr::include_graphics(figs)
+```
+
+## **Discussion**
