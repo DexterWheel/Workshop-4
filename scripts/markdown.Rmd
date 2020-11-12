@@ -6,6 +6,7 @@ output:
   bookdown::pdf_document2: default
   bookdown::word_document2: default
   bookdown::html_document2: default
+  bibliography::ref/ref-tex.bib
 ---
 ---
 
@@ -27,7 +28,7 @@ source("scripts/data-summary.R")
 
 
 ## **Introduction**
-
+Egg egg egg, egg egg egg[@Hinde, 1958]. As seen in figure ![Egg](figures/egg-figures.pdf)
 ## **Methods**
 
 ## **Results**
@@ -63,6 +64,10 @@ ggsave("figures/fig1.tiff",
        dpi = dpi)
 
 fig1
+
+```{r out.width="30%", fig.cap="egg"}
+knitr::include_graphics("figures/egg-figure.pdf")
+```
 ```
 
 ## **Discussion**
